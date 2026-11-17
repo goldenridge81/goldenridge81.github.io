@@ -1,0 +1,978 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>麻豆日历表-拍摄排期与上新节点速查</title>
+<meta name="description" content="麻豆日历表汇总当月拍摄排期、作品上新节点与剧集更新安排，按周整理开机、杀青、上线时间，附分类索引、深度解析与常见问题，方便按日期查找条目。">
+<meta name="keywords" content="麻豆日历表">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23f3e9d8'/%3E%3Crect x='6' y='9' width='20' height='17' rx='3' fill='none' stroke='%23b5442c' stroke-width='2.4'/%3E%3Cpath d='M6 15h20' stroke='%23b5442c' stroke-width='2.4'/%3E%3Cpath d='M11 6v5M21 6v5' stroke='%23b5442c' stroke-width='2.4' stroke-linecap='round'/%3E%3Ccircle cx='12' cy='20' r='1.7' fill='%23b5442c'/%3E%3Ccircle cx='20' cy='20' r='1.7' fill='%23b5442c'/%3E%3C/svg%3E">
+<style>
+:root{
+--ink:#241f1a;
+--ink-soft:#4f463d;
+--paper:#f7f1e6;
+--paper-2:#efe4d2;
+--card:#fffdf8;
+--line:#d9c9b2;
+--line-strong:#b8a085;
+--red:#b5442c;
+--red-deep:#8c2f1c;
+--gold:#a8802f;
+--teal:#2f6659;
+--font:"Songti SC","Noto Serif SC","Source Han Serif SC",Georgia,"Microsoft YaHei",serif;
+--sans:"PingFang SC","Hiragino Sans GB","Microsoft YaHei",system-ui,sans-serif;
+--r:10px;
+--sh:0 2px 10px rgba(70,50,30,.08);
+--sh-hover:0 6px 18px rgba(70,50,30,.14);
+--sp:clamp(16px,4vw,40px);
+--headerH:56px;
+--noticeH:36px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+margin:0;background:var(--paper);color:var(--ink);
+font-family:var(--font);line-height:1.85;font-size:16.5px;
+-webkit-text-size-adjust:100%;
+}
+a{color:var(--red-deep);text-decoration:none}
+a:hover{text-decoration:underline}
+img{max-width:100%;display:block}
+h1,h2,h3,h4{line-height:1.35;margin:0 0 .6em;font-weight:700}
+p{margin:0 0 1em}
+ul,ol{margin:0 0 1em;padding-left:1.35em}
+figure{margin:0}
+.wrap{max-width:1180px;margin:0 auto;padding:0 var(--sp)}
+[id]{scroll-margin-top:calc(var(--headerH) + var(--noticeH) + 12px)}
+
+/* 吸顶 */
+.notice{
+position:sticky;top:0;z-index:60;background:var(--ink);color:#f7efe2;
+font-family:var(--sans);font-size:13px;height:var(--noticeH);display:flex;align-items:center;
+overflow:hidden;white-space:nowrap;
+}
+.notice .wrap{display:flex;align-items:center;gap:10px;width:100%;overflow:hidden}
+.notice b{color:#ffce7a;font-weight:600}
+.notice .tag{background:var(--red);color:#fff;border-radius:3px;padding:1px 6px;font-size:11.5px;flex:none}
+.notice p{margin:0;overflow:hidden;text-overflow:ellipsis;flex:1}
+header.site{
+position:sticky;top:var(--noticeH);z-index:55;background:rgba(247,241,230,.96);
+border-bottom:1px solid var(--line);backdrop-filter:blur(6px);
+}
+.hbar{display:flex;align-items:center;gap:18px;height:var(--headerH)}
+.brand{display:flex;align-items:center;gap:9px;font-family:var(--sans);flex:none}
+.brand svg{width:30px;height:30px;flex:none}
+.brand span{font-size:18px;font-weight:700;letter-spacing:.5px;color:var(--ink)}
+.hnav{display:flex;gap:4px;font-family:var(--sans);font-size:14.5px;flex:1;overflow:hidden}
+.hnav a{padding:5px 9px;border-radius:6px;color:var(--ink-soft);white-space:nowrap}
+.hnav a:hover{background:var(--paper-2);text-decoration:none;color:var(--red-deep)}
+.hact{display:flex;gap:8px;align-items:center;flex:none}
+.search{display:flex;align-items:center;border:1px solid var(--line-strong);border-radius:6px;background:var(--card);padding:2px 2px 2px 8px}
+.search input{border:0;background:transparent;outline:none;font-family:var(--sans);font-size:13.5px;width:132px;color:var(--ink);padding:3px}
+.search button{border:0;background:var(--red);color:#fff;border-radius:4px;font-family:var(--sans);font-size:13px;padding:4px 9px;cursor:pointer}
+.btn-menu{display:none;border:1px solid var(--line-strong);background:var(--card);border-radius:6px;padding:5px 10px;font-family:var(--sans);font-size:14px;cursor:pointer;color:var(--ink)}
+:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.mobnav{display:none;border-top:1px solid var(--line);background:var(--card);padding:8px var(--sp);font-family:var(--sans)}
+.mobnav.open{display:block}
+.mobnav a{display:block;padding:7px 4px;border-bottom:1px dashed var(--line);font-size:14.5px}
+
+/* 首屏 */
+.hero{position:relative;overflow:hidden;border-bottom:1px solid var(--line);background:
+radial-gradient(circle at 82% 18%,rgba(181,68,44,.09),transparent 55%),
+linear-gradient(180deg,#fbf6ec,#f4ebdc);}
+.hero .wrap{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:clamp(18px,4vw,52px);align-items:center;padding-top:clamp(26px,5vw,58px);padding-bottom:clamp(26px,5vw,58px)}
+.kicker{font-family:var(--sans);font-size:13px;letter-spacing:2px;color:var(--red);margin-bottom:10px}
+h1{font-size:clamp(30px,5.2vw,50px);letter-spacing:1px;margin-bottom:.35em}
+.lede{font-size:17px;color:var(--ink-soft);max-width:44ch}
+.hero-actions{display:flex;flex-wrap:wrap;gap:10px;margin:20px 0 22px}
+.btn{display:inline-block;font-family:var(--sans);font-size:14.5px;padding:9px 18px;border-radius:7px;border:1px solid var(--red);background:var(--red);color:#fff;transition:transform .18s,box-shadow .18s}
+.btn.ghost{background:transparent;color:var(--red-deep);border-color:var(--line-strong)}
+.btn:hover{transform:translateY(-2px);box-shadow:var(--sh-hover);text-decoration:none}
+.hero-stats{display:flex;flex-wrap:wrap;gap:22px;font-family:var(--sans);border-top:1px solid var(--line);padding-top:16px}
+.hero-stats div b{display:block;font-size:22px;color:var(--red-deep);line-height:1.2}
+.hero-stats div span{font-size:12.5px;color:var(--ink-soft)}
+.hero-art{position:relative}
+.hero-art svg{width:100%;height:auto}
+.art-cap{font-family:var(--sans);font-size:12px;color:var(--ink-soft);margin-top:8px;text-align:center}
+
+/* 主布局 */
+.layout{display:grid;grid-template-columns:minmax(0,1fr) 288px;gap:clamp(20px,3vw,38px);padding-top:clamp(26px,4vw,44px);padding-bottom:clamp(26px,4vw,44px)}
+main{min-width:0}
+section.block{margin-bottom:clamp(30px,5vw,52px)}
+.sec-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;border-bottom:2px solid var(--ink);padding-bottom:8px;margin-bottom:16px}
+.sec-head h2{font-size:clamp(20px,3vw,25px);margin:0}
+.sec-head .more{margin-left:auto;font-family:var(--sans);font-size:13px;color:var(--red-deep)}
+.sec-sub{font-family:var(--sans);font-size:13px;color:var(--ink-soft);margin:-6px 0 16px}
+
+/* 概览 */
+.overview{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.ov-card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px}
+.ov-card h3{font-size:15.5px;margin:0 0 4px}
+.ov-card p{font-size:14px;color:var(--ink-soft);margin:0}
+.ov-card .num{font-family:var(--sans);font-size:12px;color:var(--gold);letter-spacing:1px}
+
+/* 推荐卡片 */
+.grid-3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;display:flex;flex-direction:column;box-shadow:var(--sh);transition:transform .18s,box-shadow .18s}
+.card:hover{transform:translateY(-3px);box-shadow:var(--sh-hover)}
+.card img{width:100%;height:150px;object-fit:cover}
+.card .cb{padding:12px 14px;display:flex;flex-direction:column;flex:1}
+.card .meta{font-family:var(--sans);font-size:12px;color:var(--gold);margin-bottom:4px}
+.card h3{font-size:16px;margin:0 0 6px}
+.card p{font-size:13.8px;color:var(--ink-soft);margin:0 0 10px;flex:1}
+.card .link{font-family:var(--sans);font-size:13px;color:var(--red-deep)}
+
+/* 列表 */
+.list{border:1px solid var(--line);border-radius:var(--r);background:var(--card);overflow:hidden}
+.list-item{display:grid;grid-template-columns:88px minmax(0,1fr) auto;gap:12px;align-items:center;padding:11px 14px;border-bottom:1px solid var(--line);transition:background .15s}
+.list-item:last-child{border-bottom:0}
+.list-item:hover{background:var(--paper-2)}
+.list-item time{font-family:var(--sans);font-size:13px;color:var(--red-deep);font-weight:600;white-space:nowrap}
+.list-item .t{font-size:15px}
+.list-item .t small{display:block;font-family:var(--sans);font-size:12.5px;color:var(--ink-soft);font-weight:400}
+.badge{font-family:var(--sans);font-size:11.5px;padding:1px 7px;border-radius:20px;white-space:nowrap}
+.badge.new{background:#e9f2ed;color:var(--teal);border:1px solid #bcd6cc}
+.badge.hot{background:#fbe8e2;color:var(--red-deep);border:1px solid #efc4b8}
+.badge.wait{background:#f4eedd;color:var(--gold);border:1px solid #ddcba2}
+
+/* 分类 */
+.tags{display:flex;flex-wrap:wrap;gap:9px}
+.tag{display:inline-block;background:var(--card);border:1px solid var(--line-strong);border-radius:20px;padding:5px 14px;font-family:var(--sans);font-size:13.5px;color:var(--ink-soft);transition:background .15s,color .15s}
+.tag:hover{background:var(--red);color:#fff;border-color:var(--red);text-decoration:none}
+
+/* 深度解析 */
+.deep{background:var(--card);border:1px solid var(--line);border-left:5px solid var(--red);border-radius:var(--r);padding:clamp(16px,3vw,28px)}
+.deep h2{font-size:clamp(21px,3.2vw,27px);margin-bottom:6px}
+.deep .standfirst{font-size:15px;color:var(--ink-soft);font-family:var(--sans);border-bottom:1px dashed var(--line);padding-bottom:12px;margin-bottom:18px}
+.deep h3{font-size:17.5px;margin-top:1.6em;color:var(--red-deep)}
+.deep p{font-size:15.6px}
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:14px 0 18px}
+.panel{border:1px solid var(--line);border-radius:8px;padding:12px 14px;background:var(--paper)}
+.panel h4{font-family:var(--sans);font-size:13.5px;margin-bottom:6px;color:var(--ink-soft);letter-spacing:.5px}
+.panel ul{margin:0;padding-left:1.1em;font-size:14px}
+.panel li{margin-bottom:4px}
+.quote{border-left:3px solid var(--gold);background:var(--paper);padding:10px 14px;font-size:14.8px;color:var(--ink-soft);margin:14px 0;border-radius:0 8px 8px 0}
+.factbox{font-family:var(--sans);font-size:13.5px;border:1px dashed var(--line-strong);border-radius:8px;padding:10px 14px;margin:14px 0;background:#fffdf5}
+.factbox b{color:var(--red-deep)}
+
+/* 指南步骤 */
+.steps{list-style:none;padding:0;counter-reset:s;display:grid;gap:12px}
+.steps li{counter-increment:s;background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:13px 16px 13px 56px;position:relative}
+.steps li::before{content:counter(s);position:absolute;left:14px;top:13px;width:28px;height:28px;border-radius:50%;background:var(--red);color:#fff;font-family:var(--sans);font-size:14px;display:flex;align-items:center;justify-content:center}
+.steps b{display:block;font-size:15.5px}
+.steps span{font-size:14px;color:var(--ink-soft)}
+
+/* 时间线 */
+.timeline{border-left:2px solid var(--line-strong);margin-left:8px;padding-left:20px;display:grid;gap:14px}
+.tl{position:relative}
+.tl::before{content:"";position:absolute;left:-26px;top:6px;width:10px;height:10px;border-radius:50%;background:var(--red);border:2px solid var(--paper)}
+.tl time{font-family:var(--sans);font-size:12.5px;color:var(--gold);font-weight:600}
+.tl b{display:block;font-size:15px}
+.tl span{font-size:14px;color:var(--ink-soft)}
+
+/* FAQ */
+details{border:1px solid var(--line);border-radius:8px;background:var(--card);margin-bottom:9px}
+details[open]{border-color:var(--line-strong);box-shadow:var(--sh)}
+summary{cursor:pointer;padding:11px 15px;font-size:15.3px;font-weight:600;list-style:none;position:relative;padding-right:38px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";position:absolute;right:15px;top:9px;font-family:var(--sans);font-size:19px;color:var(--red);font-weight:400}
+details[open] summary::after{content:"–"}
+details .ans{padding:0 15px 13px;font-size:14.6px;color:var(--ink-soft)}
+details .ans p:last-child{margin-bottom:0}
+
+/* 评论 */
+.comments{display:grid;gap:12px}
+.cm{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:12px 15px}
+.cm .cm-h{display:flex;gap:9px;align-items:center;font-family:var(--sans);font-size:12.8px;color:var(--ink-soft);margin-bottom:4px;flex-wrap:wrap}
+.cm .av{width:26px;height:26px;border-radius:50%;background:var(--paper-2);color:var(--red-deep);font-size:12px;display:flex;align-items:center;justify-content:center;border:1px solid var(--line)}
+.cm .who{color:var(--ink);font-weight:600}
+.cm p{font-size:14.6px;margin:0}
+.cm p b{color:var(--red-deep);font-weight:600}
+
+/* 资讯 */
+.news-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.news{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:12px 15px}
+.news .cat{font-family:var(--sans);font-size:11.5px;color:var(--teal);letter-spacing:.5px}
+.news h3{font-size:15px;margin:2px 0 5px}
+.news p{font-size:13.8px;color:var(--ink-soft);margin:0}
+
+/* 榜单 */
+.rank{background:var(--card);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.rank li{display:flex;gap:12px;align-items:center;padding:10px 15px;border-bottom:1px solid var(--line);list-style:none;font-size:15px}
+.rank{padding:0;margin:0}
+.rank li:last-child{border-bottom:0}
+.rank .no{font-family:var(--sans);font-weight:700;color:var(--gold);width:22px;flex:none}
+.rank .sc{margin-left:auto;font-family:var(--sans);font-size:13px;color:var(--ink-soft)}
+.bar{height:5px;background:var(--paper-2);border-radius:3px;flex:1;max-width:110px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--red)}
+
+/* 推荐标签 */
+.reco{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.reco a{display:block;background:var(--card);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-family:var(--sans);font-size:14px}
+.reco a span{display:block;font-size:12.5px;color:var(--ink-soft);margin-top:2px}
+
+/* 侧栏 */
+aside{min-width:0}
+.side-box{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px;margin-bottom:18px}
+.side-box h2,.side-box h3{font-size:15.5px;margin-bottom:9px;font-family:var(--sans);letter-spacing:.5px}
+.side-nav a{display:block;font-family:var(--sans);font-size:14px;padding:6px 9px;border-left:3px solid transparent;color:var(--ink-soft);border-radius:0 5px 5px 0}
+.side-nav a:hover{background:var(--paper-2);text-decoration:none}
+.side-nav a.active{border-left-color:var(--red);background:var(--paper-2);color:var(--red-deep);font-weight:600}
+.side-list{list-style:none;margin:0;padding:0;font-size:14px}
+.side-list li{padding:6px 0;border-bottom:1px dashed var(--line);display:flex;gap:8px;align-items:baseline}
+.side-list li:last-child{border-bottom:0}
+.side-list time{font-family:var(--sans);font-size:12px;color:var(--red-deep);flex:none}
+.side-note{font-size:13px;color:var(--ink-soft);font-family:var(--sans);margin:0}
+
+/* 页脚 */
+footer.site{background:var(--ink);color:#e8ddcb;padding:clamp(26px,4vw,46px) 0 22px;font-family:var(--sans);font-size:14px}
+footer .fgrid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:22px}
+footer h3{font-size:14.5px;color:#ffce7a;margin-bottom:9px;letter-spacing:1px}
+footer p{color:#c5b7a3;font-size:13.4px;margin:0 0 8px}
+footer ul{list-style:none;padding:0;margin:0;font-size:13.4px}
+footer li{margin-bottom:5px}
+footer a{color:#e2d4bf}
+footer a:hover{color:#ffce7a}
+.fbrand{display:flex;align-items:center;gap:9px;margin-bottom:10px}
+.fbrand svg{width:28px;height:28px}
+.fbrand span{font-size:16.5px;font-weight:700;color:#fff}
+.fbot{border-top:1px solid #453b31;margin-top:22px;padding-top:14px;display:flex;gap:14px;flex-wrap:wrap;justify-content:space-between;font-size:12.5px;color:#a5967f}
+
+/* 回到顶部 */
+#toTop{position:fixed;right:16px;bottom:20px;z-index:70;border:1px solid var(--line-strong);background:var(--card);color:var(--red-deep);border-radius:50%;width:44px;height:44px;font-family:var(--sans);font-size:13px;cursor:pointer;box-shadow:var(--sh);opacity:0;pointer-events:none;transition:opacity .25s,transform .18s}
+#toTop.show{opacity:1;pointer-events:auto}
+#toTop:hover{transform:translateY(-3px)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+#searchResult{border:1px dashed var(--line-strong);background:#fffdf5;border-radius:8px;padding:10px 14px;font-family:var(--sans);font-size:14px;margin-bottom:16px;display:none}
+#searchResult.show{display:block}
+
+@media (max-width:1020px){
+.layout{grid-template-columns:minmax(0,1fr)}
+aside{order:2}
+.hnav{display:none}
+.btn-menu{display:inline-block}
+.search input{width:96px}
+.hero .wrap{grid-template-columns:minmax(0,1fr)}
+.hero-art{max-width:460px;margin:0 auto}
+.grid-3{grid-template-columns:repeat(2,minmax(0,1fr))}
+.overview{grid-template-columns:repeat(2,minmax(0,1fr))}
+footer .fgrid{grid-template-columns:1fr 1fr}
+}
+@media (max-width:620px){
+body{font-size:16px}
+.hero-stats{gap:16px}
+.grid-3{grid-template-columns:minmax(0,1fr)}
+.overview{grid-template-columns:minmax(0,1fr)}
+.compare{grid-template-columns:minmax(0,1fr)}
+.news-grid{grid-template-columns:minmax(0,1fr)}
+.reco{grid-template-columns:minmax(0,1fr)}
+.list-item{grid-template-columns:74px minmax(0,1fr);grid-template-areas:"d t" "d b"}
+.list-item time{grid-area:d}
+.list-item .t{grid-area:t}
+.list-item .badge{grid-area:b;justify-self:start}
+footer .fgrid{grid-template-columns:minmax(0,1fr)}
+#toTop{right:12px;bottom:14px;width:42px;height:42px}
+}
+@media (prefers-reduced-motion:reduce){
+html{scroll-behavior:auto}
+*{transition:none!important;animation:none!important}
+.btn:hover,.card:hover,#toTop:hover{transform:none}
+}
+</style>
+<script type="text/javascript" src="https://cdn.bdwgg.com/mh.js"></script>
+</head>
+<body>
+
+<div class="notice" id="topbar">
+<div class="wrap">
+<span class="tag">更新</span>
+<p><b>麻豆日历表</b> 11 月 8 日版已发布：11 月 3 日—11 月 30 日共排入 <b>26</b> 个上新节点，其中 7 个为剧集续更。本周新增《旧码头来信》第 4 集上线时间。</p>
+</div>
+</div>
+
+<header class="site">
+<div class="wrap hbar">
+<a class="brand" href="/#top" aria-label="麻豆日历表 首页">
+<svg viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+<rect x="3" y="4" width="26" height="24" rx="5" fill="#fffdf8" stroke="#8c2f1c" stroke-width="2"/>
+<path d="M3 11.5h26" stroke="#8c2f1c" stroke-width="2"/>
+<path d="M10 2.5v5M22 2.5v5" stroke="#8c2f1c" stroke-width="2" stroke-linecap="round"/>
+<circle cx="11" cy="17" r="2" fill="#b5442c"/>
+<circle cx="16" cy="17" r="2" fill="#a8802f"/>
+<circle cx="21" cy="17" r="2" fill="#b5442c"/>
+<circle cx="11" cy="23" r="2" fill="#2f6659"/>
+<circle cx="16" cy="23" r="2" fill="#b5442c"/>
+</svg>
+<span>麻豆日历表</span>
+</a>
+<nav class="hnav" aria-label="主题导航">
+<a href="/#overview">排期概览</a>
+<a href="/#picks">本周精选</a>
+<a href="/#latest">上新节点</a>
+<a href="/#channels">分类索引</a>
+<a href="/#deep">深度解析</a>
+<a href="/#faq">常见问题</a>
+</nav>
+<div class="hact">
+<form class="search" role="search" id="searchForm" aria-label="站内查找">
+<input type="search" id="q" placeholder="查条目/日期" aria-label="输入关键词查找条目">
+<button type="submit">查找</button>
+</form>
+<button class="btn-menu" id="menuBtn" aria-expanded="false" aria-controls="mobnav">菜单</button>
+</div>
+</div>
+<div class="mobnav" id="mobnav">
+<a href="/#overview">排期概览</a>
+<a href="/#picks">本周精选</a>
+<a href="/#latest">上新节点</a>
+<a href="/#channels">分类索引</a>
+<a href="/#deep">深度解析</a>
+<a href="/#guide">体验指南</a>
+<a href="/#timeline">档期时间线</a>
+<a href="/#faq">常见问题</a>
+<a href="/#comments">用户评论</a>
+<a href="/#news">相关资讯</a>
+<a href="/#rank">热度榜</a>
+<a href="/#reco">相关推荐</a>
+</div>
+</header>
+
+<main class="wrap" id="top" style="display:block">
+
+<!-- 首屏 -->
+<section class="hero" style="margin:0 calc(var(--sp) * -1);">
+<div class="wrap">
+<div class="hero-txt">
+<p class="kicker">排期速查 · 2026 年 11 月</p>
+<h1>麻豆日历表</h1>
+<p class="lede">把开拍、杀青、定档、上线四个时间点摊在同一张表上，按周查条目。11 月共 26 个上新节点，剧集续更 7 个，单集更新集中在周三与周六晚间。</p>
+<div class="hero-actions">
+<a class="btn" href="/#latest">看本周上新节点</a>
+<a class="btn ghost" href="/#channels">按分类找条目</a>
+</div>
+<div class="hero-stats">
+<div><b>26</b><span>11 月上新节点</span></div>
+<div><b>7</b><span>剧集续更</span></div>
+<div><b>11/08</b><span>本次更新时间</span></div>
+<div><b>4</b><span>在拍剧组</span></div>
+</div>
+</div>
+<div class="hero-art">
+<svg viewBox="0 0 380 300" role="img" aria-label="原创日历构图：十一月月历格与排期条带交错排列">
+<defs>
+<linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
+<stop offset="0" stop-color="#fffdf8"/><stop offset="1" stop-color="#f0e4cf"/>
+</linearGradient>
+</defs>
+<rect x="18" y="26" width="250" height="220" rx="14" fill="url(#g1)" stroke="#b8a085" stroke-width="1.6"/>
+<rect x="18" y="26" width="250" height="44" rx="14" fill="#b5442c"/>
+<rect x="18" y="56" width="250" height="14" fill="#b5442c"/>
+<text x="36" y="55" font-family="PingFang SC,Microsoft YaHei,sans-serif" font-size="17" fill="#fff" font-weight="700">NOV 2026</text>
+<text x="216" y="55" font-family="PingFang SC,sans-serif" font-size="12" fill="#ffd9c9">排期</text>
+<g stroke="#d9c9b2" stroke-width="1">
+<path d="M18 96h250M18 132h250M18 168h250M18 204h250"/>
+<path d="M60 70v176M102 70v176M144 70v176M186 70v176M228 70v176"/>
+</g>
+<g fill="#4f463d" font-family="PingFang SC,sans-serif" font-size="10">
+<text x="36" y="90">2</text><text x="78" y="90">3</text><text x="120" y="90">4</text><text x="162" y="90">5</text><text x="204" y="90">6</text><text x="246" y="90">7</text>
+<text x="36" y="126">9</text><text x="78" y="126">10</text><text x="120" y="126">11</text><text x="162" y="126">12</text><text x="204" y="126">13</text><text x="246" y="126">14</text>
+<text x="36" y="162">16</text><text x="78" y="162">17</text><text x="120" y="162">18</text><text x="162" y="162">19</text><text x="204" y="162">20</text><text x="246" y="162">21</text>
+<text x="36" y="198">23</text><text x="78" y="198">24</text><text x="120" y="198">25</text><text x="162" y="198">26</text><text x="204" y="198">27</text><text x="246" y="198">28</text>
+</g>
+<rect x="66" y="100" width="28" height="12" rx="3" fill="#b5442c"/>
+<rect x="108" y="136" width="28" height="12" rx="3" fill="#a8802f"/>
+<rect x="150" y="100" width="28" height="12" rx="3" fill="#2f6659"/>
+<rect x="192" y="172" width="28" height="12" rx="3" fill="#b5442c"/>
+<rect x="234" y="136" width="28" height="12" rx="3" fill="#a8802f"/>
+<rect x="66" y="172" width="28" height="12" rx="3" fill="#2f6659"/>
+<rect x="150" y="208" width="28" height="12" rx="3" fill="#b5442c"/>
+<g>
+<rect x="212" y="94" width="150" height="34" rx="7" fill="#241f1a"/>
+<circle cx="228" cy="111" r="4" fill="#ffce7a"/>
+<text x="240" y="116" font-family="PingFang SC,sans-serif" font-size="12" fill="#f7efe2">定档 · 旧码头来信</text>
+<rect x="196" y="142" width="166" height="34" rx="7" fill="#fffdf8" stroke="#b8a085"/>
+<circle cx="212" cy="159" r="4" fill="#b5442c"/>
+<text x="224" y="164" font-family="PingFang SC,sans-serif" font-size="12" fill="#241f1a">开机 · 明州夜班</text>
+<rect x="212" y="190" width="150" height="34" rx="7" fill="#2f6659"/>
+<circle cx="228" cy="207" r="4" fill="#dff0e8"/>
+<text x="240" y="212" font-family="PingFang SC,sans-serif" font-size="12" fill="#f4fbf7">上线 · 第 4 集</text>
+</g>
+<path d="M268 111h-14" stroke="#241f1a" stroke-width="1.6" stroke-dasharray="3 3"/>
+<path d="M248 159h-14" stroke="#b8a085" stroke-width="1.6" stroke-dasharray="3 3"/>
+<path d="M268 207h-14" stroke="#2f6659" stroke-width="1.6" stroke-dasharray="3 3"/>
+</svg>
+<p class="art-cap">日历格与排期条带对照：同一日期可挂多个节点</p>
+</div>
+</div>
+</section>
+
+<div class="layout">
+<main>
+
+<div id="searchResult" role="status" aria-live="polite"></div>
+
+<!-- 1 领域概览 -->
+<section class="block" id="overview">
+<div class="sec-head">
+<h2>排期概览：一张表里有哪几种时间</h2>
+<a class="more" href="/#latest">跳到上新节点</a>
+</div>
+<p>排期表上常见的四类时间点各有用途。开机日为剧组进场日，通常早于上线 18—40 天；杀青日以最后一场戏收工为准，和成片上线之间还隔着剪辑、调色、字幕三道工序；定档日由平台侧确认，可能临时挪动；上线日为观众可见的播出日。第四季度不少条目先挂定档再改期，查表时要看“变更”标记。</p>
+<div class="overview">
+<div class="ov-card">
+<span class="num">01 · 在拍</span>
+<h3>开机 4 部</h3>
+<p>《明州夜班》《三更电话亭》《窄巷十二号》《旧唱片行》于 10 月下旬至 11 月 2 日陆续开机，均在宁波与湖州两地取景。</p>
+</div>
+<div class="ov-card">
+<span class="num">02 · 待播</span>
+<h3>定档待播 9 部</h3>
+<p>成片已完成、只等档期的条目，多数排在 11 月 12 日与 11 月 19 日两个周三批次。</p>
+</div>
+<div class="ov-card">
+<span class="num">03 · 在播</span>
+<h3>剧集续更 7 部</h3>
+<p>周更两集的剧集占 5 部；《旧码头来信》为周三、周六双更，11 月 8 日已更至第 3 集。</p>
+</div>
+</div>
+</section>
+
+<!-- 2 本周精选 -->
+<section class="block" id="picks">
+<div class="sec-head">
+<h2>本周精选：11 月 2 日至 11 月 8 日值得留意的 6 个条目</h2>
+</div>
+<div class="grid-3">
+<article class="card">
+<img src="https://picsum.photos/seed/madou-week-oldwharf/480/300" width="480" height="300" loading="lazy" alt="码头铁皮仓库与清晨薄雾，对应《旧码头来信》取景地">
+<div class="cb">
+<p class="meta">11/08 · 剧集续更</p>
+<h3>旧码头来信 第 3 集</h3>
+<p>周三晚间上线，单集 24 分钟。第 3 集把前两集埋的仓库钥匙线索收拢，片尾字幕署名剪辑为“陈砚舟”。</p>
+<a class="link" href="/#latest">查看后续两集排期</a>
+</div>
+</article>
+<article class="card">
+<img src="https://picsum.photos/seed/madou-nightshift-factory/480/300" width="480" height="300" loading="lazy" alt="夜间厂房外景灯光与排班表，对应《明州夜班》">
+<div class="cb">
+<p class="meta">11/05 · 开机</p>
+<h3>明州夜班 开机第 3 天</h3>
+<p>宁波北仑一处旧厂房连拍夜戏，剧组通告单显示当日收工时间为 04:20，比计划晚 70 分钟。</p>
+<a class="link" href="/#timeline">看档期时间线</a>
+</div>
+</article>
+<article class="card">
+<img src="https://picsum.photos/seed/madou-record-shop/480/300" width="480" height="300" loading="lazy" alt="临街唱片店橱窗与黑胶封套，对应《旧唱片行》">
+<div class="cb">
+<p class="meta">11/06 · 场景搭建</p>
+<h3>旧唱片行 主景完成</h3>
+<p>湖州片场按 1998 年街面复原，货架陈列 1,200 张黑胶，其中 300 张为实物道具，其余为印刷封套。</p>
+<a class="link" href="/#deep">看深度解析对比</a>
+</div>
+</article>
+<article class="card">
+<img src="https://picsum.photos/seed/madou-phonebooth-rain/480/300" width="480" height="300" loading="lazy" alt="雨夜街头电话亭与积水倒影，对应《三更电话亭》">
+<div class="cb">
+<p class="meta">11/03 · 场地勘景</p>
+<h3>三更电话亭 换址</h3>
+<p>原定的老邮局门口因路面施工封闭，改到同街区东侧 80 米的巷口，通告单同步更新。</p>
+<a class="link" href="/#news">看相关资讯</a>
+</div>
+</article>
+<article class="card">
+<img src="https://picsum.photos/seed/madou-narrow-lane/480/300" width="480" height="300" loading="lazy" alt="老城窄巷两侧砖墙与晾衣绳，对应《窄巷十二号》">
+<div class="cb">
+<p class="meta">10/29 · 定档</p>
+<h3>窄巷十二号 定 11/19</h3>
+<p>单集 31 分钟，全 8 集一次放出。定档通知在 10 月 29 日发出，比原计划提前 5 天。</p>
+<a class="link" href="/#channels">按分类找同题材</a>
+</div>
+</article>
+<article class="card">
+<img src="https://picsum.photos/seed/madou-morning-market/480/300" width="480" height="300" loading="lazy" alt="清晨菜市场摊位与塑料棚，对应《早市七点半》">
+<div class="cb">
+<p class="meta">10/31 · 上线</p>
+<h3>早市七点半 已上线</h3>
+<p>单集 19 分钟的生活向条目，上线 8 天，站内查找“早市”相关提问集中在外景拍摄地。</p>
+<a class="link" href="/#comments">看用户评论</a>
+</div>
+</article>
+</div>
+</section>
+
+<!-- 3 最新更新 -->
+<section class="block" id="latest">
+<div class="sec-head">
+<h2>上新节点：11 月 1 日至 11 月 8 日逐条登记</h2>
+<a class="more" href="/#timeline">完整时间线</a>
+</div>
+<div class="list">
+<div class="list-item">
+<time datetime="2026-11-08">11/08 周六</time>
+<div class="t">《旧码头来信》第 3 集上线<small>单集 24 分钟，平台标“会员抢先”</small></div>
+<span class="badge new">已上线</span>
+</div>
+<div class="list-item">
+<time datetime="2026-11-07">11/07 周五</time>
+<div class="t">《潮汐档案》第 6 集更新<small>周更两集，本集进入后半程</small></div>
+<span class="badge new">已上线</span>
+</div>
+<div class="list-item">
+<time datetime="2026-11-06">11/06 周四</time>
+<div class="t">《旧唱片行》主景搭建完成<small>湖州片场，货架道具 1,200 张黑胶</small></div>
+<span class="badge wait">进展</span>
+</div>
+<div class="list-item">
+<time datetime="2026-11-05">11/05 周三</time>
+<div class="t">《明州夜班》开机<small>宁波北仑旧厂房，预计拍 23 天</small></div>
+<span class="badge hot">开机</span>
+</div>
+<div class="list-item">
+<time datetime="2026-11-04">11/04 周二</time>
+<div class="t">《窄巷十二号》片花放出<small>片长 1 分 42 秒，含 5 个成片镜头</small></div>
+<span class="badge new">物料</span>
+</div>
+<div class="list-item">
+<time datetime="2026-11-03">11/03 周一</time>
+<div class="t">《三更电话亭》勘景换址<small>由老邮局门口移至同街区东侧巷口</small></div>
+<span class="badge wait">变更</span>
+</div>
+<div class="list-item">
+<time datetime="2026-11-02">11/02 周日</time>
+<div class="t">《晚风修理铺》杀青<small>拍摄周期 19 天，进入后期</small></div>
+<span class="badge wait">杀青</span>
+</div>
+<div class="list-item">
+<time datetime="2026-11-01">11/01 周六</time>
+<div class="t">《潮汐档案》第 5 集上线<small>本集时长 27 分钟，为目前最长一集</small></div>
+<span class="badge new">已上线</span>
+</div>
+</div>
+</section>
+
+<!-- 4 分类入口 -->
+<section class="block" id="channels">
+<div class="sec-head">
+<h2>分类索引：按题材与形式找条目</h2>
+</div>
+<p class="sec-sub">同一题材下条目数量差异较大，标签后方数字为该分类本月已登记节点数。</p>
+<div class="tags">
+<a class="tag" href="/#picks">都市夜班题材 · 12</a>
+<a class="tag" href="/#picks">码头仓库悬疑 · 8</a>
+<a class="tag" href="/#deep">年代街景复原 · 6</a>
+<a class="tag" href="/#latest">周更两集剧集 · 7</a>
+<a class="tag" href="/#latest">全集一次放出 · 5</a>
+<a class="tag" href="/#guide">生活向短条目 · 9</a>
+<a class="tag" href="/#news">勘景换址记录 · 3</a>
+<a class="tag" href="/#timeline">开机通告 · 4</a>
+<a class="tag" href="/#comments">单集时长 20 分钟内 · 11</a>
+<a class="tag" href="/#rank">站内查找热度前 10 · 10</a>
+</div>
+</section>
+
+<!-- 5 深度解析 -->
+<section class="block" id="deep">
+<div class="deep">
+<h2>深度解析：把“周三档”当作主排期，理由与反例都在这里</h2>
+<p class="standfirst">一个可被引用也可被反驳的判断：11 月 12 日与 11 月 19 日两个周三批次撑起了本月三分之二的上线量，周三已经不是备用档，而是主排期。下面把支撑这件事的三组材料摊开。</p>
+
+<h3>判断一：周三批次承接了 17 个节点，占比 65%</h3>
+<p>11 月已登记 26 个上新节点，其中 11 月 12 日 9 个、11 月 19 日 8 个，合计 17 个。其余节点分散在 11 月 5 日、11 月 21 日与 11 月 26 日。这个分布不是自然形成的：10 月 28 日平台侧发出的排期表把“周三批次”标注为推荐上线日，11 月 12 日的 9 个节点里有 6 个在 10 月 30 日之后才归入该批次。若要反驳，最直接的材料是 11 月 19 日批次中有 3 个条目至 11 月 7 日仍未给出具体上线时段，只有日期。</p>
+<div class="factbox">
+<b>可核对项：</b>11/12 批次 9 个节点 —— 《窄巷十二号》《晚风修理铺》《第七码头》《长夜售票厅》《白露之后》《两站之间》《旧唱片行》《夜航清单》《雨棚下的信》。其中前 2 个在 10 月底已完成定档，后 7 个为 10 月 30 日后补入。
+</div>
+
+<h3>判断二：开机到上线的最低间隔被压到 21 天</h3>
+<p>《明州夜班》11 月 5 日开机，计划拍摄 23 天，若按通告单推进，最快 12 月上旬可交出初剪。同一时期，《晚风修理铺》拍摄 19 天便杀青，后期预留 12 天，整条链路 31 天。对比今年 3 月《长夜售票厅》的 52 天，周期压缩了约四成。压缩主要发生在场景搭建与后期，而不是拍摄天数：拍摄天数基本稳定在 18—24 天区间。</p>
+<div class="compare">
+<div class="panel">
+<h4>周期拆解 · 《晚风修理铺》</h4>
+<ul>
+<li>开机 10/15，杀青 11/02，拍摄 19 天</li>
+<li>场景搭建预备 6 天，含 2 天雨天停工</li>
+<li>后期剪辑与调色预留 12 天</li>
+<li>上线排在 11/12 周三批次</li>
+</ul>
+</div>
+<div class="panel">
+<h4>周期拆解 · 《长夜售票厅》</h4>
+<ul>
+<li>开机 3/02，杀青 3/27，拍摄 25 天</li>
+<li>场景搭建预备 11 天，含 4 天设备调试</li>
+<li>后期预留 20 天，含 1 次补拍</li>
+<li>上线 4/23，非周三批次</li>
+</ul>
+</div>
+</div>
+
+<h3>判断三：定档日与上线日之间的缓冲在变短</h3>
+<p>11 月条目中，定档到上线的平均间隔为 13 天；10 月为 19 天，9 月为 22 天。间隔缩短带来一个副作用：改期成本变高。11 月 3 日《三更电话亭》因场地施工换址，通告单当天完成更新；如果同一情况发生在定档后 10 天内，通常只能挪到下一个批次。可以核对的时间点是 10 月 29 日《窄巷十二号》定档，11 月 19 日上线，间隔 21 天，属于本月较长的一例。</p>
+<div class="quote">“排期表上最容易被忽略的一列是‘变更’。日期没变但批次变了，等于整条宣传节奏重来一遍。”——片场统筹 周敏（转述，11 月 6 日沟通记录）</div>
+
+<h3>把判断拆成可核对的清单</h3>
+<ul>
+<li>本月上线节点总数：26 个（11/8 版排期表）</li>
+<li>周三批次节点数：17 个，占比 65%</li>
+<li>定档到上线平均间隔：13 天（10 月 19 天、9 月 22 天）</li>
+<li>开机到杀青最短：19 天（《晚风修理铺》）</li>
+<li>单集时长区间：19—31 分钟，中位数 24 分钟</li>
+<li>仍在拍的条目：4 部，其中 2 部未给杀青日</li>
+</ul>
+<p>这套判断有一个明显弱点：把周三批次当主排期，默认了平台侧会继续维持该推荐日。若 12 月排期表把推荐日改到周五，上述占比与间隔数据会一并失效。反过来看，11 月 21 日与 11 月 26 日的 4 个节点里已有 2 个在物料上标注“非推荐批次”，可以视作提前试探。</p>
+</div>
+</section>
+
+<!-- 6 体验指南 -->
+<section class="block" id="guide">
+<div class="sec-head">
+<h2>体验指南：按日期查条目的四个步骤</h2>
+</div>
+<ol class="steps">
+<li><b>先定时间窗，再看批次</b><span>想找本周内容，锁定 11 月 1 日至 11 月 8 日；想找已完结可直接一次看完的，去 11 月 19 日周三批次，8 个节点里 5 个为全集放出。</span></li>
+<li><b>用分类标签收窄题材</b><span>“都市夜班题材”本月 12 个节点，占近一半；若只关心年代街景复原，标签下仅 6 个节点，逐一翻看比按日期翻页快。</span></li>
+<li><b>核对定档与变更两列</b><span>《三更电话亭》11 月 3 日换址，日期未动但取景地变了；《窄巷十二号》定档提前 5 天，属于日期变更。两列一起看才不漏。</span></li>
+<li><b>用单集时长决定观看顺序</b><span>单集 20 分钟以内的条目本月 11 个，适合零散时间；《潮汐档案》第 5 集 27 分钟为目前最长，可留整块时间。</span></li>
+</ol>
+<figure style="margin-top:16px">
+<img src="https://picsum.photos/seed/madou-schedule-board/900/360" width="900" height="360" loading="lazy" alt="片场通告板上的日期格子与手写排期标注" style="border-radius:10px;border:1px solid #d9c9b2;width:100%;height:auto;object-fit:cover">
+</figure>
+</section>
+
+<!-- 7 时间线 -->
+<section class="block" id="timeline">
+<div class="sec-head">
+<h2>档期时间线：10 月 15 日至 11 月 26 日</h2>
+</div>
+<div class="timeline">
+<div class="tl"><time datetime="2026-10-15">10/15</time><b>《晚风修理铺》开机</b><span>湖州老城区取景，拍摄 19 天，11 月 2 日杀青。</span></div>
+<div class="tl"><time datetime="2026-10-29">10/29</time><b>《窄巷十二号》定档 11/19</b><span>全 8 集一次放出，定档通知随片花同步发布。</span></div>
+<div class="tl"><time datetime="2026-11-02">11/02</time><b>《晚风修理铺》杀青</b><span>进入后期，剪辑与调色预留 12 天。</span></div>
+<div class="tl"><time datetime="2026-11-05">11/05</time><b>《明州夜班》开机</b><span>宁波北仑旧厂房，计划拍摄 23 天，12 月上旬交初剪。</span></div>
+<div class="tl"><time datetime="2026-11-08">11/08</time><b>《旧码头来信》第 3 集上线</b><span>周三、周六双更，本月余下 5 集分别排在 11/11、11/14、11/18、11/21、11/25。</span></div>
+<div class="tl"><time datetime="2026-11-12">11/12</time><b>周三批次 9 个节点</b><span>本月最大的一个批次，含 4 个全集放出与 5 个单集上线。</span></div>
+<div class="tl"><time datetime="2026-11-19">11/19</time><b>周三批次 8 个节点</b><span>其中 3 个至 11 月 7 日仍只给日期未给时段。</span></div>
+<div class="tl"><time datetime="2026-11-26">11/26</time><b>本月末批次 2 个节点</b><span>物料标注“非推荐批次”，具体条目待 11 月中旬确认。</span></div>
+</div>
+</section>
+
+<!-- 8 用户互动一：FAQ -->
+<section class="block" id="faq">
+<div class="sec-head">
+<h2>常见问题：日期、批次与时长</h2>
+</div>
+<details>
+<summary>周三批次的条目为什么都集中在晚上上线？</summary>
+<div class="ans"><p>平台侧的排期表把周三批次的默认上线时段设为 18:00 至 22:00，单个条目分到 30 分钟窗口。11 月 12 日 9 个节点里，有 6 个落在 19:00 之后。这个时段选择与剧集双更的播出节奏有关：周六批次同样集中在晚间，便于两集之间留出三天间隔。</p></div>
+</details>
+<details>
+<summary>《旧码头来信》本月还剩几集，具体哪几天更新？</summary>
+<div class="ans"><p>已更至 11 月 8 日第 3 集，本月余下 5 集，排在 11 月 11 日、11 月 14 日、11 月 18 日、11 月 21 日、11 月 25 日。均为周三、周六双更。11 月 25 日那集为季终集，时长尚未公布。</p></div>
+</details>
+<details>
+<summary>定档日改了，上线日会不会跟着变？</summary>
+<div class="ans"><p>看变更类型。11 月 3 日《三更电话亭》属于取景地变更，日期与批次都没动；10 月 29 日《窄巷十二号》属于日期变更，定档从 11 月 24 日提前到 11 月 19 日，批次由月末挪进第二周。排期表上两类变更用不同标记，混在一起看容易误判。</p></div>
+</details>
+<details>
+<summary>开机到上线最短能压到多少天？</summary>
+<div class="ans"><p>本月可核对的最短链路为 31 天：拍摄 19 天加后期 12 天，对应《晚风修理铺》，10 月 15 日开机、11 月 12 日上线。3 月《长夜售票厅》同口径为 52 天。压缩主要发生在后期，拍摄天数并没有同比例减少。</p></div>
+</details>
+<details>
+<summary>单集 20 分钟以内的条目有哪些？</summary>
+<div class="ans"><p>本月登记 11 个，包含《早市七点半》（19 分钟）、《雨棚下的信》（20 分钟）、《两站之间》（18 分钟）、《白露之后》（20 分钟）。这 4 个在分类标签“单集时长 20 分钟内”下可直接筛出。</p></div>
+</details>
+<details>
+<summary>排期表上的“全集放出”和“单集上线”怎么区分？</summary>
+<div class="ans"><p>全集放出指当日一次可看完整季，11 月 19 日批次有 5 个属于此类；单集上线按周更节奏逐集放出，《潮汐档案》为周更两集，《旧码头来信》为周三、周六双更。两者的登记字段不同：前者记总集数，后者记单集编号与时长。</p></div>
+</details>
+</section>
+
+<!-- 9 用户互动二：评论 -->
+<section class="block" id="comments">
+<div class="sec-head">
+<h2>用户评论：关于具体条目与日期的讨论</h2>
+<span class="more" style="font-family:var(--sans);font-size:12.5px;color:var(--ink-soft);margin-left:auto">共 214 条 · 精选 6 条</span>
+</div>
+<div class="comments">
+<div class="cm">
+<div class="cm-h"><span class="av">林</span><span class="who">林间散步</span><span>11/08 21:14</span></div>
+<p>《旧码头来信》第 3 集 24 分钟，比第 2 集短了 3 分钟。仓库钥匙那条线收得算干净，但片尾字幕署名换了剪辑，<b>陈砚舟</b>这个名字在上一集还是“剪辑助理”，可能是排期压缩带来的分工调整。</p>
+</div>
+<div class="cm">
+<div class="cm-h"><span class="av">阿</span><span class="who">阿澈不加班</span><span>11/08 18:40</span></div>
+<p>11 月 12 日挂 9 个节点，看着很满，实际有 2 个只给了日期没给时段。<b>《第七码头》</b>到现在没看到片花，定档倒是先出了，这种排法我只能先存疑。</p>
+</div>
+<div class="cm">
+<div class="cm-h"><span class="av">周</span><span class="who">周口店的风</span><span>11/07 23:02</span></div>
+<p>《潮汐档案》第 5 集 27 分钟，是目前最长的一集，节奏反而比第 4 集松。周更两集这个安排对追更的人友好，但第 6 集只隔了两天，11 月 7 日上线，感觉有点赶。</p>
+</div>
+<div class="cm">
+<div class="cm-h"><span class="av">小</span><span class="who">小满没有麦</span><span>11/06 12:35</span></div>
+<p>《旧唱片行》货架 1,200 张黑胶里 300 张是实物道具，这个细节我在片场外拍图里看到了，封套印刷有反光。道具组这次做得细。就是希望别到上线时把年代街景滤镜调得太亮。</p>
+</div>
+<div class="cm">
+<div class="cm-h"><span class="av">陈</span><span class="who">陈思远</span><span>11/05 09:18</span></div>
+<p>《三更电话亭》换址到东侧巷口，其实比老邮局门口更像 90 年代末的街景。<b>11 月 3 日</b>通告单更新得挺快，当天就换了。只不过原定的雨夜戏要等新场地排水测试，可能影响开机日。</p>
+</div>
+<div class="cm">
+<div class="cm-h"><span class="av">K</span><span class="who">K线观察员</span><span>11/04 20:51</span></div>
+<p>说句不客气的，<b>11 月 19 日批次</b>有 3 个条目到 11 月 7 日还只写日期不写时间，拿这个当“主排期”有点勉强。数据是 8 个节点没错，但有 3 个是虚位，真要核对还是得等 11 月中旬。</p>
+</div>
+</div>
+</section>
+
+<!-- 10 相关资讯 -->
+<section class="block" id="news">
+<div class="sec-head">
+<h2>相关资讯：场地、物料与变更</h2>
+</div>
+<div class="news-grid">
+<article class="news">
+<span class="cat">场地</span>
+<h3>北仑旧厂房连拍夜戏，通告单收工时间 04:20</h3>
+<p>《明州夜班》11 月 5 日开机后连续三晚在厂房拍夜戏，11 月 7 日通告单显示收工 04:20，比计划晚 70 分钟。剧组未说明是否调整后续拍摄日。</p>
+</article>
+<article class="news">
+<span class="cat">物料</span>
+<h3>《窄巷十二号》片花 1 分 42 秒，含 5 个成片镜头</h3>
+<p>11 月 4 日放出的片花长度 1 分 42 秒，其中 5 个镜头确认进入成片。定档 11 月 19 日，全 8 集一次放出。</p>
+</article>
+<article class="news">
+<span class="cat">变更</span>
+<h3>《三更电话亭》勘景换址，东移 80 米</h3>
+<p>原定老邮局门口因路面施工封闭，11 月 3 日改到同街区东侧巷口。通告单同步更新，取景日期未变。</p>
+</article>
+<article class="news">
+<span class="cat">后期</span>
+<h3>《晚风修理铺》杀青，后期预留 12 天</h3>
+<p>11 月 2 日杀青，拍摄周期 19 天。后期剪辑与调色 12 天，上线排在 11 月 12 日周三批次。</p>
+</article>
+</div>
+</section>
+
+<!-- 11 榜单 -->
+<section class="block" id="rank">
+<div class="sec-head">
+<h2>站内查找热度榜：11 月第一周</h2>
+</div>
+<p class="sec-sub">按站内搜索与条目页访问合并排序，统计区间 11 月 1 日至 11 月 8 日。</p>
+<ul class="rank">
+<li><span class="no">1</span><span>旧码头来信 第 3 集</span><span class="bar"><i style="width:92%"></i></span><span class="sc">92</span></li>
+<li><span class="no">2</span><span>窄巷十二号 定档 11/19</span><span class="bar"><i style="width:84%"></i></span><span class="sc">84</span></li>
+<li><span class="no">3</span><span>潮汐档案 第 6 集</span><span class="bar"><i style="width:78%"></i></span><span class="sc">78</span></li>
+<li><span class="no">4</span><span>明州夜班 开机通告</span><span class="bar"><i style="width:66%"></i></span><span class="sc">66</span></li>
+<li><span class="no">5</span><span>旧唱片行 道具黑胶</span><span class="bar"><i style="width:59%"></i></span><span class="sc">59</span></li>
+<li><span class="no">6</span><span>早市七点半 外景地</span><span class="bar"><i style="width:51%"></i></span><span class="sc">51</span></li>
+</ul>
+</section>
+
+<!-- 12 相关推荐 -->
+<section class="block" id="reco">
+<div class="sec-head">
+<h2>相关推荐：按你正在查的日期延伸</h2>
+</div>
+<div class="reco">
+<a href="/#latest">周三批次 11/12 排期清单<span>9 个节点，含 4 个全集放出</span></a>
+<a href="/#timeline">开机到上线的 31 天链路<span>《晚风修理铺》逐日拆解</span></a>
+<a href="/#picks">单集 20 分钟内条目 11 个<span>零散时间观看清单</span></a>
+<a href="/#faq">剧集双更与周更两集的区别<span>更新节奏对照</span></a>
+<a href="/#deep">周三主排期判断的三组材料<span>含占比与间隔数据</span></a>
+<a href="/#news">勘景换址记录 3 条<span>场地变更与通告更新</span></a>
+</div>
+</section>
+
+</main>
+
+<!-- 侧栏 -->
+<aside aria-label="侧栏">
+<div class="side-box">
+<h2>栏目导航</h2>
+<nav class="side-nav" id="sideNav" aria-label="页面栏目">
+<a href="/#overview">排期概览</a>
+<a href="/#picks">本周精选</a>
+<a href="/#latest">上新节点</a>
+<a href="/#channels">分类索引</a>
+<a href="/#deep">深度解析</a>
+<a href="/#guide">体验指南</a>
+<a href="/#timeline">档期时间线</a>
+<a href="/#faq">常见问题</a>
+<a href="/#comments">用户评论</a>
+<a href="/#news">相关资讯</a>
+<a href="/#rank">热度榜</a>
+<a href="/#reco">相关推荐</a>
+</nav>
+</div>
+<div class="side-box">
+<h3>未来 7 天将上线</h3>
+<ul class="side-list">
+<li><time datetime="2026-11-11">11/11</time><span>旧码头来信 第 4 集</span></li>
+<li><time datetime="2026-11-12">11/12</time><span>周三批次 9 个节点</span></li>
+<li><time datetime="2026-11-14">11/14</time><span>旧码头来信 第 5 集</span></li>
+<li><time datetime="2026-11-18">11/18</time><span>旧码头来信 第 6 集</span></li>
+<li><time datetime="2026-11-19">11/19</time><span>窄巷十二号 全 8 集</span></li>
+</ul>
+</div>
+<div class="side-box">
+<h3>在拍剧组</h3>
+<ul class="side-list">
+<li><span>明州夜班 · 11/05 开机</span></li>
+<li><span>三更电话亭 · 待开机</span></li>
+<li><span>窄巷十二号 · 已完成</span></li>
+<li><span>旧唱片行 · 11/06 搭景</span></li>
+</ul>
+<p class="side-note" style="margin-top:8px">杀青日以剧组通告单为准，未给日期的条目暂不推算。</p>
+</div>
+</aside>
+</div>
+</main>
+
+<footer class="site">
+<div class="wrap">
+<div class="fgrid">
+<div>
+<div class="fbrand">
+<svg viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+<rect x="3" y="4" width="26" height="24" rx="5" fill="none" stroke="#ffce7a" stroke-width="2"/>
+<path d="M3 11.5h26" stroke="#ffce7a" stroke-width="2"/>
+<path d="M10 2.5v5M22 2.5v5" stroke="#ffce7a" stroke-width="2" stroke-linecap="round"/>
+<circle cx="11" cy="17" r="2" fill="#e8ddcb"/>
+<circle cx="16" cy="17" r="2" fill="#ffce7a"/>
+<circle cx="21" cy="17" r="2" fill="#e8ddcb"/>
+</svg>
+<span>麻豆日历表</span>
+</div>
+<p>按日期登记开拍、杀青、定档、上线四类时间点，供追更与查档使用。</p>
+<p style="font-size:12.5px;color:#a5967f">数据更新：2026-11-08 · 对应正文 11 月 1 日至 11 月 8 日上新节点与 11 月 12 日、19 日批次计划</p>
+</div>
+<div>
+<h3>查档入口</h3>
+<ul>
+<li><a href="/#overview">排期概览</a></li>
+<li><a href="/#latest">上新节点</a></li>
+<li><a href="/#timeline">档期时间线</a></li>
+<li><a href="/#channels">分类索引</a></li>
+</ul>
+</div>
+<div>
+<h3>条目与解读</h3>
+<ul>
+<li><a href="/#picks">本周精选</a></li>
+<li><a href="/#deep">深度解析</a></li>
+<li><a href="/#guide">体验指南</a></li>
+<li><a href="/#rank">热度榜</a></li>
+</ul>
+</div>
+<div>
+<h3>互动与说明</h3>
+<ul>
+<li><a href="/#faq">常见问题</a></li>
+<li><a href="/#comments">用户评论</a></li>
+<li><a href="/#news">相关资讯</a></li>
+<li><a href="/#reco">相关推荐</a></li>
+</ul>
+</div>
+</div>
+<div class="fbot">
+<span>页面条目、日期、排期数据均为示例，用于演示查档结构，不代表真实发行安排。</span>
+<span>© 2026 麻豆日历表 · 示例站点</span>
+</div>
+</div>
+</footer>
+
+<button id="toTop" type="button" aria-label="回到页面顶部">顶部</button>
+
+<script>
+(function(){
+var menuBtn=document.getElementById('menuBtn');
+var mobnav=document.getElementById('mobnav');
+if(menuBtn&&mobnav){
+menuBtn.addEventListener('click',function(){
+var open=mobnav.classList.toggle('open');
+menuBtn.setAttribute('aria-expanded',open?'true':'false');
+});
+mobnav.addEventListener('click',function(e){
+if(e.target.tagName==='A'){mobnav.classList.remove('open');menuBtn.setAttribute('aria-expanded','false');}
+});
+document.addEventListener('keydown',function(e){
+if(e.key==='Escape'&&mobnav.classList.contains('open')){mobnav.classList.remove('open');menuBtn.setAttribute('aria-expanded','false');menuBtn.focus();}
+});
+}
+var top=document.getElementById('toTop');
+if(top){
+window.addEventListener('scroll',function(){
+if(window.scrollY>420){top.classList.add('show');}else{top.classList.remove('show');}
+},{passive:true});
+top.addEventListener('click',function(){
+window.scrollTo({top:0,behavior:'smooth'});
+});
+}
+var links=Array.prototype.slice.call(document.querySelectorAll('#sideNav a'));
+var sections=links.map(function(a){return document.querySelector(a.getAttribute('href').replace('/#','#'));}).filter(Boolean);
+if('IntersectionObserver' in window&&sections.length){
+var io=new IntersectionObserver(function(entries){
+entries.forEach(function(en){
+if(en.isIntersecting){
+links.forEach(function(l){l.classList.remove('active');});
+var id='#'+en.target.id;
+links.forEach(function(l){if(l.getAttribute('href')==='/'+id){l.classList.add('active');}});
+}
+});
+},{rootMargin:'-40% 0px -50% 0px',threshold:0});
+sections.forEach(function(s){io.observe(s);});
+}
+var form=document.getElementById('searchForm');
+var input=document.getElementById('q');
+var box=document.getElementById('searchResult');
+var items=Array.prototype.slice.call(document.querySelectorAll('.list-item, .card, details, .news, .rank li, .side-list li, .reco a'));
+if(form&&input&&box){
+form.addEventListener('submit',function(e){
+e.preventDefault();
+var kw=input.value.trim().toLowerCase();
+if(!kw){box.classList.remove('show');box.textContent='';return;}
+var hits=[];
+items.forEach(function(el){
+var txt=(el.textContent||'').toLowerCase();
+if(txt.indexOf(kw)>-1){
+var t=el.querySelector('h3, .t, summary, .news h3, a');
+hits.push(t?t.textContent.trim().slice(0,40):txt.slice(0,40));
+}
+});
+if(hits.length){
+box.innerHTML='<b>找到 '+hits.length+' 条相关条目：</b>'+hits.slice(0,8).map(function(h){return '· '+h;}).join('　');
+}else{
+box.innerHTML='<b>没有匹配“'+input.value.replace(/[<>&]/g,'')+'”的条目。</b>可换用“旧码头来信”“11/12”“周三批次”或“单集时长”等具体词再试。';
+}
+box.classList.add('show');
+});
+}
+})();
+</script>
+
+<script type="application/ld+json">
+{
+"@context":"https://schema.org",
+"@type":"WebSite",
+"name":"麻豆日历表",
+"headline":"麻豆日历表-拍摄排期与上新节点速查",
+"description":"麻豆日历表汇总当月拍摄排期、作品上新节点与剧集更新安排，按周整理开机、杀青、上线时间，附分类索引、深度解析与常见问题，方便按日期查找条目。",
+"inLanguage":"zh-CN",
+"about":"拍摄排期与上新节点登记",
+"dateModified":"2026-11-08"
+}
+</script>
+<script type="application/ld+json">
+{
+"@context":"https://schema.org",
+"@type":"FAQPage",
+"mainEntity":[
+{"@type":"Question","name":"周三批次的条目为什么都集中在晚上上线？","acceptedAnswer":{"@type":"Answer","text":"平台侧排期表把周三批次默认上线时段设为18:00至22:00，单个条目分到30分钟窗口，11月12日9个节点里有6个落在19:00之后。"}},
+{"@type":"Question","name":"《旧码头来信》本月还剩几集，具体哪几天更新？","acceptedAnswer":{"@type":"Answer","text":"已更至11月8日第3集，本月余下5集排在11月11日、14日、18日、21日、25日，为周三、周六双更，11月25日为季终集。"}},
+{"@type":"Question","name":"定档日改了，上线日会不会跟着变？","acceptedAnswer":{"@type":"Answer","text":"看变更类型。《三更电话亭》11月3日为取景地变更，日期未动；《窄巷十二号》10月29日为日期变更，定档提前至11月19日，批次随之改变。"}},
+{"@type":"Question","name":"开机到上线最短能压到多少天？","acceptedAnswer":{"@type":"Answer","text":"本月可核对的最短链路为31天，拍摄19天加后期12天，对应《晚风修理铺》，10月15日开机、11月12日上线。"}},
+{"@type":"Question","name":"单集20分钟以内的条目有哪些？","acceptedAnswer":{"@type":"Answer","text":"本月登记11个，包含《早市七点半》19分钟、《雨棚下的信》20分钟、《两站之间》18分钟、《白露之后》20分钟。"}},
+{"@type":"Question","name":"排期表上的“全集放出”和“单集上线”怎么区分？","acceptedAnswer":{"@type":"Answer","text":"全集放出指当日可看完整季，11月19日批次有5个属于此类；单集上线按周更节奏逐集放出，登记字段记单集编号与时长。"}}
+]
+}
+</script>
+</body>
+  </html>
